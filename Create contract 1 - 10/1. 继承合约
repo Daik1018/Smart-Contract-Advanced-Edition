@@ -1,0 +1,41 @@
+//继承，a为父合约，b为子合约
+//继承之前要标注哪些是需要重写的
+//virtual 定义可以被重写的
+
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+contract A {
+    function foo() public pure virtual returns (string memory) {
+        return "A";
+    }
+
+    function bar() public pure virtual returns (string memory) {
+        return "A";}
+
+    function baz() public pure  returns (string memory) {
+        return "A";
+    }
+    }
+
+//首先要说明B是继承于A的 xx is XX
+contract B is A {
+        function foo() public  pure override returns (string memory) {
+        return "B";
+    }
+
+    function bar() public pure virtual override returns (string memory) {
+        return "B";
+    }
+    }
+//baz是继承于a的函数，剩下两个是b的函数
+//bar和foo返回的是b，只有baz返回的是a
+
+//要继承的话b的函数就要加上virtual
+contract C is B {
+    function bar() public pure override returns (string memory) {
+        return "C";
+    }
+}
+//一个来自于c，一个来自于a，b
+//bar返回的是c，baz返回的是a，foo返回的是B
