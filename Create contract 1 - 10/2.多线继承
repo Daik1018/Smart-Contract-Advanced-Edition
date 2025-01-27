@@ -1,0 +1,46 @@
+//多线继承
+//从越基础的合约到派生之间的合约有一个顺序关系
+//把继承最少的合约放在更前面一些
+
+//x最基础，y在中间，z是派生的
+
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+contract X {
+    function foo() public pure virtual returns (string memory) {
+        return "x";
+    }
+
+    function bar() public pure virtual returns (string memory) {
+        return "X";
+    }
+
+    function x() public pure  returns (string memory) {
+        return "X";
+    }
+}
+//y继承了x，y也有foo和bar，并且标记了重写，还有个自己的函数Y
+contract Y is X {
+    function foo() public pure virtual override returns (string memory) {
+        return "Y";
+    }
+
+    function bar() public pure virtual override returns (string memory) {
+        return "Y";
+    }
+
+    function y() public pure returns (string memory) {
+        return "Y";
+    }
+}
+
+contract Z is X,Y {
+    function foo() public pure override(X,Y) returns (string memory) {
+        return "Z";
+    }
+//()里的xy循序正常无妨，但是编写的时候需要注意先后顺序
+    function bar() public  pure override(X,Y) returns (string memory) {
+        return "Z";
+    }
+}
