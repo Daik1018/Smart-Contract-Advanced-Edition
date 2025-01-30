@@ -1,0 +1,30 @@
+//public：外部和内部可见（为 storage/state 变量创建 getter 函数）
+//private：仅在当前合同中可见
+//external：仅在外部可见（仅适用于函数）- 即只能通过消息调用（通过this.func)
+//internal：仅在内部可见，合约内部进行调用
+
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+contract VisibilityBase {
+    uint private x = 0;
+    uint internal y = 1;
+    uint public z = 2;
+
+    function privateFunc () private pure returns (uint) {
+        return 0;
+    }
+
+    function internalFunc() internal pure returns  (uint) {
+        return 100;        
+    }
+
+    function publicFunc() public pure returns (uint) {
+        return 200;
+    }
+
+    function externalFunc() external pure returns (uint) {
+        return 300;
+    }
+
+    }
