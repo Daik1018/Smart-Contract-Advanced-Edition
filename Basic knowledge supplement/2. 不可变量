@@ -1,0 +1,19 @@
+//常量表达方式
+
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+contract Immutable {
+    address public immutable owner = msg.sender;
+
+    uint public x;
+    function foo() external {
+        require(msg.sender == owner );
+        x += 1;
+    }
+
+    }
+
+//把变量定义为常量
+//特殊的值immutable，这样的关键词是一次敌营成功，可以跟常量一样节约gas，又可以部署的时候才给值
+//在部署的时候赋值
