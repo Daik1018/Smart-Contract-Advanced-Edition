@@ -1,0 +1,27 @@
+//第一个回退函数只需要定义一个fallback，不需要加function
+//回退函数可以接受主币的发送
+
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.3;
+
+contract Fallback {
+    event Log(string func,address sender,uint value,bytes data);
+    
+    fallback() external  payable { 
+        emit Log("fallback",msg.sender,msg.value,msg.data);
+    }
+//记录调用的是fallback函数，第二个是调用者的地址，第三个调用的时候发送的数量，第四个是发送的数据
+   
+    receive()  external payable { 
+        emit Log("fallback",msg.sender,msg.value," ");
+    }
+//直接接受主币的写法，receive必须加上payable
+
+}
+
+//以太坊主币发送合约的时候，首先会判断msg.data是否为空，也就是是否调用了数据，
+//如果不为空就会调用fallback函数，如果为空判断receive是否存在，如果不存在就用fallback函数
+
+//receive只负责接受主币
+
+//发送主币如果有数据就会调用fallback函数，没有数据会调用revice
