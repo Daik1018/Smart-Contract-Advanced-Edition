@@ -19,6 +19,7 @@ contract Fallback {
 
 }
 
+//使用流程
 //以太坊主币发送合约的时候，首先会判断msg.data是否为空，也就是是否调用了数据，
 //如果不为空就会调用fallback函数，如果为空判断receive是否存在，如果不存在就用fallback函数
 
