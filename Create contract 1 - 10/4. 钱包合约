@@ -1,0 +1,40 @@
+//做一个以太坊钱包
+//根据钱包可以存入一定数量的以太坊主币，并且可以取出以太坊主币
+//需要定义一个管理员，只有管理员可以储存
+
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.3;
+
+contract EtherWaller{
+
+    address public owner;
+
+    constructor() {
+        owner = payable(msg.sender);
+    }
+//定义管理员
+
+    receive() external payable { }
+//定义回退函数，接收到了主币的发送
+//这样调用合约当中不存在的函数就会报错，除非只发送主币并不携带数据
+
+    function withdraw(uint _amount) external {
+        require(msg.sender == owner ,"caller is not owner");
+        payable(msg.sender).transfer(_amount);
+
+        (bool sent,) = msg.sender.call{value: _amount}("");
+        require(sent,"Failed to send Ether");
+}
+
+//合约可以取出主币，withdraw可以把主币发送合约拥有者的地址
+//还需要有一个参数，参数就是想要取出多少
+//限制函数只能有合约拥有者调用，不相等的话就会报错
+//用transfer向拥有者发送主币，发送的数量为amount
+
+    function getBalance() external view returns (uint) {
+        return address(this).balance;
+    }
+    }
+
+//获取余额 ：address(this) 的 balance
+
