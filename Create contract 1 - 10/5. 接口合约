@@ -1,0 +1,22 @@
+//调用接口合约
+
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.3;
+
+interface ICounter {
+    function count() external view returns (uint);
+    function inc() external;
+}
+//interface开头，名字大写，完成了接口调用的方法
+//调用了两个合约的函数
+
+contract CallInterface {
+    uint public count;
+    
+    function examples(address _counter) external {
+        ICounter(_counter).inc();
+        count = ICounter(_counter).count();
+    }
+}
+//调用inc这个方法
+// count = ICounter(_counter).count();
