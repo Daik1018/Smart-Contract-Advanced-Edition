@@ -1,0 +1,24 @@
+//自毁合约，用函数selfdestruct
+//删除合约，强制发送
+
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.8;
+
+// 修改合约名称为 SelfDestructContract
+contract SelfDestructContract {
+    constructor() payable {}
+
+    // 修改函数名称为 destroySelf
+    function destroySelf() external {
+        selfdestruct(payable(msg.sender));
+        //必须是payable类型，默认是没有的
+    }
+
+    //一旦调用就会把剩下的主币发送到sender的账户上
+    //自毁的意思也就是说强制把剩下的主币发送到需要的账户上，如果没有会进行报错
+
+    function testCall() external pure returns (uint) {
+        return 123;
+    }
+}
+
