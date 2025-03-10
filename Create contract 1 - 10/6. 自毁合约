@@ -21,3 +21,4 @@ contract SelfDestructContract {
         return 123;
     }
 }
+
