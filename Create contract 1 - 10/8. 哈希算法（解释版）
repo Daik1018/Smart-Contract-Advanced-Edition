@@ -1,0 +1,45 @@
+//两个特性，一个是输入值相同；另一个是不管输入值有多大，输入值是定长的
+//哈希算法是不可逆向运算的，通常用在签名上，或者是获取一个特定的id情况下
+
+//哈希值特定是格式是bytes32
+
+
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.4;
+
+contract HashFunc {
+    function hash(string memory text,uint num,address addr) external pure returns (bytes32)
+    //哈希算法特定的内部函数叫做keccak256
+    //打包的形式叫做abi.encode，有两种方法，一种是encode，另外一种是encodePacked
+//打包之后就会返回bytes类型的返回值
+
+// encodePacked会有一定的压缩
+{
+    return  keccak256(abi.encodePacked(text,num,addr));
+    }
+
+
+function encode(string memory text0,string memory text1) external  pure returns (bytes memory) { 
+    return abi.encode(text0,text1);
+}
+
+
+function encodePacked(string memory text0,string memory text1) external  pure returns (bytes memory) { 
+    return abi.encodePacked(text0,text1);
+}
+
+
+  //部署之后输入字符串，数字，address之后就可以输出哈希值
+
+  //三个方法之后进行部署之后
+  //1.encode会采用abi的编码形式，给每一个参数补上0；2.encodePacked是把字符串变成了十六进制
+  //区别是encode会补零，encodePacked不会补0
+
+//哈希碰撞的实验
+
+    function   collision(string memory text0,string memory text1) external pure  returns (bytes32) { 
+        return keccak256(abi.encodePacked(text0,text1));
+    } 
+//会导致不同的算法返回一样的数据，运算错误了
+//两种解决办法，一种是用encode打包，这样就会补0，另一种方法是把参数隔开，例如在中间添加一个数字的类型uint
+}
